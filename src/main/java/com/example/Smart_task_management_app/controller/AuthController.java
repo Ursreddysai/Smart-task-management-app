@@ -29,7 +29,6 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
 
-    // ========= ✅ Signup =========
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody SignupRequest request) {
         if (userRepo.findByUsername(request.getUsername()).isPresent()) {
@@ -44,7 +43,7 @@ public class AuthController {
                 .username(request.getUsername())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role((request.getRole() != null ? request.getRole().toUpperCase() : "USER")) // ✅ Removed "ROLE_"
+                .role((request.getRole() != null ? request.getRole().toUpperCase() : "USER")) 
                 .active(true)
                 .build();
 
@@ -52,7 +51,6 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("message", "✅ Signup successful!"));
     }
 
-    // ========= ✅ Login =========
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
@@ -84,7 +82,7 @@ public class AuthController {
         }
     }
 
-    // ========= DTOs =========
+  
     @Data
     public static class LoginRequest {
 
