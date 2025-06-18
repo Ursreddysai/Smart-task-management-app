@@ -177,7 +177,7 @@ function sortTasks() {
   alert("🛠️ Sorting functionality coming soon!");
 }
 
-// Dummy AI buttons functionality
+
 function predictCategory() {
   alert("🤖 Predict Category feature coming soon!");
 }
