@@ -38,12 +38,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         if (path.startsWith("/api/auth")
                 || path.endsWith(".html") || path.endsWith(".css") || path.endsWith(".js")
                 || path.equals("/") || path.equals("/index.html")) {
-            // Skip token check for public endpoints and static files
+            
             filterChain.doFilter(request, response);
             return;
         }
 
-        // Extract token
+      
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7);
             try {
@@ -53,7 +53,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             }
         }
 
-        // Validate and authenticate
+       
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
