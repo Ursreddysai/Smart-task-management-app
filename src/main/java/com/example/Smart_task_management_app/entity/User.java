@@ -5,7 +5,7 @@ import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "users") // Explicitly naming the table
+@Table(name = "users") 
 @Getter
 @Setter
 @NoArgsConstructor
@@ -27,23 +27,23 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private String role; // "USER" or "ADMIN"
+    private String role; 
 
     @Column(nullable = false)
-    private boolean active = true; // Default to active
+    private boolean active = true; 
 
-    // Optional: User's full name
+  
     @Column(nullable = true)
     private String fullName;
 
-    // Optional: Audit fields
+    
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // Lifecycle hooks for audit timestamps
+    
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
