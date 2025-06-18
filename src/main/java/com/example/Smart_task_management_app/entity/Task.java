@@ -32,14 +32,14 @@ public class Task {
     @NotNull
     private LocalDate dueDate;
 
-    private String status; // e.g., "Pending", "In Progress", "Completed"
+    private String status; /
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 
-    // Constructors
+    
     public Task() {
     }
 
@@ -53,7 +53,7 @@ public class Task {
         this.user = user;
     }
 
-    // Getters and Setters
+   
     public Long getId() {
         return id;
     }
