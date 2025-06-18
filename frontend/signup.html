@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Signup</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="signup-page">
+  <div class="container">
+    <h2>Signup</h2>
+    <form id="signupForm">
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <select id="role">
+        <option value="user">User</option>
+        <option value="admin">Admin</option>
+      </select>
+      <button type="submit">Signup</button>
+    </form>
+    <a class="switch-link" href="login.html">Already have an account? Login</a>
+  </div>
+
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const payload = {
+        username: document.getElementById('username').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        password: document.getElementById('password').value,
+        role: document.getElementById('role').value
+      };
+
+      if (payload.password.length < 6) {
+        alert("Password must be at least 6 characters.");
+        return;
+      }
+
+      try {
+        const res = await fetch('http://localhost:8080/api/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const msg = await res.text();
+        console.log("Signup response:", msg);
+
+        if (res.ok) {
+          alert("✅ Signup successful");
+          window.location.href = 'login.html';
+        } else {
+          alert("❌ Signup failed: " + msg);
+        }
+      } catch (error) {
+        alert("❌ An error occurred: " + error.message);
+        console.error("Signup error:", error);
+      }
+    });
+  </script>
+</body>
+</html>

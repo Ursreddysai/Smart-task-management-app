@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📊 Smart Task Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <h1>📊 Smart Task Management Dashboard</h1>
+    <button onclick="logout()">Logout</button>
+  </header>
+
+  <!-- Task Stats Section -->
+  <section id="stats" class="section">
+    <div class="task-group">
+      <h2>✅ Today's Tasks</h2>
+      <ul id="todayTasks"></ul>
+    </div>
+    <div class="task-group">
+      <h2>📅 Upcoming Tasks</h2>
+      <ul id="upcomingTasks"></ul>
+    </div>
+  </section>
+
+  <!-- Charts Section -->
+  <section id="charts" class="section">
+    <h2>📈 Task Statistics</h2>
+    <div class="chart-container">
+      <canvas id="completedChart" width="400" height="200"></canvas>
+      <canvas id="categoryChart" width="400" height="200"></canvas>
+    </div>
+  </section>
+
+  <!-- Create Task Section -->
+  <section id="create-task" class="section">
+    <h2>📝 Create New Task</h2>
+    <form id="taskForm">
+      <input type="text" id="taskName" placeholder="Task Name" required />
+      <input type="text" id="taskSummary" placeholder="Task Summary" required />
+      <input type="text" id="taskCategory" placeholder="Category" required />
+      <input type="date" id="taskDueDate" required />
+      <select id="taskStatus" required>
+        <option value="PENDING">Pending</option>
+        <option value="IN_PROGRESS">In Progress</option>
+        <option value="COMPLETED">Completed</option>
+      </select>
+      <button type="submit">➕ Add Task</button>
+    </form>
+    <div class="ai-buttons">
+      <button onclick="predictCategory()">🧠 Predict Category</button>
+      <button onclick="generateDescription()">🧠 Generate Description</button>
+      <button onclick="generateReport()">📋 Generate Report (Admin)</button>
+    </div>
+  </section>
+
+  <!-- Task List Table Section -->
+  <section id="task-list" class="section">
+    <h2>📋 All Tasks</h2>
+
+    <div class="sort-filter">
+      <label for="sort">Sort by:</label>
+      <select id="sort" onchange="sortTasks()">
+        <option value="dueDate">Due Date</option>
+        <option value="category">Category</option>
+        <option value="status">Status</option>
+      </select>
+    </div>
+
+    <table border="1" id="taskTable">
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Due Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="export-buttons">
+      <button onclick="download('csv')">⬇️ Export CSV</button>
+      <button onclick="download('excel')">⬇️ Export Excel</button>
+      <button onclick="download('pdf')">⬇️ Export PDF</button>
+    </div>
+  </section>
+
+  <!-- JavaScript -->
+  <script src="scripts.js"></script>
+</body>
+</html>

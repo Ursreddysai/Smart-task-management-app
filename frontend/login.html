@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="login-page">
+  <div class="container">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Username" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <a class="switch-link" href="signup.html">Don't have an account? Signup</a>
+  </div>
+
+  <script>
+    // Redirect if already logged in
+    if (localStorage.getItem('token')) {
+      window.location.href = 'dashboard.html';
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const payload = {
+        username: document.getElementById('username').value.trim(),
+        password: document.getElementById('password').value
+      };
+
+      try {
+        const res = await fetch('http://localhost:8080/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        let result;
+        const contentType = res.headers.get("content-type");
+
+        if (contentType && contentType.includes("application/json")) {
+          result = await res.json();
+        } else {
+          const text = await res.text();
+          result = { message: text };
+        }
+
+        if (res.ok && result.token) {
+          localStorage.setItem("token", result.token);
+          alert("✅ Login successful");
+          window.location.href = 'dashboard.html';
+        } else {
+          alert("❌ Login failed: " + (result.message || "Invalid credentials"));
+        }
+      } catch (err) {
+        alert("❌ Login error: " + err.message);
+        console.error("Login error:", err);
+      }
+    });
+  </script>
+</body>
+</html>
