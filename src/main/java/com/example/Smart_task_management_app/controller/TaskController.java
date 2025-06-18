@@ -41,7 +41,7 @@ public class TaskController {
     private final UserRepository userRepo;
     private final TaskExportService exportService;
 
-    // ==================== DTOs ====================
+   
     public static class TaskRequest {
 
         public String name;
@@ -70,7 +70,7 @@ public class TaskController {
         }
     }
 
-    // ==================== CRUD ====================
+   
     @PostMapping
     public ResponseEntity<TaskResponse> createTask(
             @Valid @RequestBody TaskRequest req,
@@ -148,7 +148,7 @@ public class TaskController {
         return ResponseEntity.noContent().build();
     }
 
-    // ==================== Filters/Stats ====================
+    
     @GetMapping("/due-today")
     public ResponseEntity<List<TaskResponse>> tasksDueToday(@AuthenticationPrincipal UserDetails userDetails) {
         User user = userRepo.findByUsername(userDetails.getUsername()).orElseThrow();
@@ -186,7 +186,7 @@ public class TaskController {
         return ResponseEntity.ok(data);
     }
 
-    // ==================== Export ====================
+   
     @GetMapping("/export/csv")
     public void exportToCSV(
             @AuthenticationPrincipal UserDetails userDetails,
